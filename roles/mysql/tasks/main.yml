@@ -1,0 +1,22 @@
+---
+ - name: Install the MySQL packages
+   apt: name={{ item }} state=installed 
+   with_items:  
+     - mysql-server
+     - mysql-client
+     - python-mysqldb
+     - libmysqlclient-dev
+
+ - name: Copy the configuration file (my.cnf)
+   template: src=my.cnf.j2 dest=/etc/mysql/my.cnf
+   notify:
+     - Restart MySQL
+
+ - name: Start Mysql Service
+   service: name=mysql state=started enabled=true
+
+ - name: Create Application Database
+   mysql_db: name={{ dbname }} state=present
+
+ - name: Create Application DB User
+   mysql_user: name={{ dbuser }} password={{ password }} priv=*.*:ALL host='%' state=present

@@ -1,0 +1,13 @@
+---
+- name: Install nginx
+  apt: name=nginx state=present
+
+- name: Copy nginx configuration for nginx
+  template: src=default dest=/etc/nginx/sites-available/default
+  notify: Restart nginx
+
+- name: Php file to check php working or not in nginx 
+  template: src=info.php dest=/usr/share/nginx/html/info.php
+
+- name: nginx service state
+  service: name=nginx state=started enabled=yes

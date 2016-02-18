@@ -1,0 +1,13 @@
+---
+
+- name: Installation
+  hosts: "{{ hosts }}"
+  remote_user: "{{ remote_user }}"
+  sudo: True
+
+  roles:
+    - nginx
+    - php
+    - mysql
+    - phpmyadmin
+
